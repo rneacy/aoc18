@@ -4,10 +4,13 @@ with open("Inputs/3/input.txt", "r") as f:
     claims = f.read().splitlines()
 
 grid = np.zeros((1050, 1050), dtype=int)
+valid_ids = {}
 
 print_grid = False
 
-def partA():
+def partA(): # includes part b
+    init_ids()
+
     for claim in claims:
         c,x,y,w,h = parse_claim(claim)
 
@@ -19,6 +22,10 @@ def partA():
                 if grid[cY, cX] == 0:
                     grid[cY, cX] = c
                 else:
+                    # exclude both claims from valid ids
+                    valid_ids[grid[cY, cX]] = False
+                    valid_ids[c] = False
+
                     grid[cY, cX] = -1
                 
                 cY += 1
@@ -32,9 +39,13 @@ def partA():
             if a == -1:
                 sqm += 1
 
-    print(sqm)
+    print("Overlap sqM: " + str(sqm))
     if print_grid:
         print(grid)
+
+    for claim in valid_ids:
+        if valid_ids[claim] == True and claim != 0:
+            print("Whole claim: " + str(claim))
 
 
 def parse_claim(claim: str):
@@ -53,5 +64,9 @@ def parse_claim(claim: str):
     c = int(claim[0][1:-1])
 
     return c,x,y,w,h
+
+def init_ids():
+    for i in range(len(claims)):
+        valid_ids[i] = True
 
 partA()
