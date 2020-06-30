@@ -23,8 +23,8 @@ def partA(): # includes part b
                     grid[cY, cX] = c
                 else:
                     # exclude both claims from valid ids
-                    valid_ids[grid[cY, cX]] = False
-                    valid_ids[c] = False
+                    valid_ids[grid[cY, cX] - 1] = False
+                    valid_ids[c - 1] = False
 
                     grid[cY, cX] = -1
                 
@@ -44,8 +44,8 @@ def partA(): # includes part b
         print(grid)
 
     for claim in valid_ids:
-        if valid_ids[claim] == True and claim != 0:
-            print("Whole claim: " + str(claim))
+        if valid_ids[claim] == True:
+            print("Whole claim: " + str(claim + 1))
 
 
 def parse_claim(claim: str):
