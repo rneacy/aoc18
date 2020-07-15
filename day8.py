@@ -1,7 +1,5 @@
 with open("Inputs/8/input.txt", "r") as f:
-    inp = f.readline()
-    data = inp.split(" ")
-    data = [int(item) for item in data]
+    data = [int(item) for item in f.readline().split(" ")]
 
 meta_count = 0
 def partA():
@@ -18,7 +16,6 @@ def analyse(index):
     index += 2
 
     c_index = index
-    traversed = 0
     if cnodes:
         for i in range(cnodes):
             c_index = analyse(c_index) # analyse the child node
