@@ -16,13 +16,11 @@ def partA():
 
     while c_marble < l_marble:
         for player in range(players): # place marbles
-            #print(marbles)
             if c_marble % 23 == 0:
                 player_scores[player] += c_marble
                 i = ((i - 7) % len(marbles))
                 player_scores[player] += marbles[i]
                 del marbles[i]
-                #c_marble = marbles[i]
                 c_marble += 1
                 continue
 
@@ -35,7 +33,21 @@ def partA():
 
     print(max(player_scores.values()))
 
+# had to rewrite- too slow, better use of deque
+def partA_fast():
+    for marble in range(l_marble + 1):
+        if marble % 23 == 0 and marble != 0:
+            marbles.rotate(7)
+            player_scores[marble % players] += marble + marbles.pop()
+            marbles.rotate(-1)
+        else:
+            marbles.rotate(-1)
+            marbles.append(marble)
+
+    print(max(player_scores.values()))
+
 try:
-    partA()
+    #partA()
+    partA_fast()
 except KeyboardInterrupt:
-    print("done")
+    pass
